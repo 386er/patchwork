@@ -2,12 +2,14 @@ define(['jquery',
 	'backbone',
 	'underscore',
 	'd3',
-	'modules/helpers'
+	'modules/helpers',
+	'modules/cellCollection'
 ], function($,
 	Backbone,
 	_,
 	d3,
-	Helper
+	Helper,
+	CellCollection
 	) {
 
 	var CellBlockGenerator = function(parameterObj) {
@@ -21,7 +23,7 @@ define(['jquery',
 		that.className = "svg-wrapper";
 		that.COLOR_RANGE_MULTIPLICATOR = 2;
 		that.helpers = new Helper();
-		
+		that.collection = new CellCollection(that.cellSize, that.colors);
 		
 		
 		that.render = function() {
@@ -29,13 +31,13 @@ define(['jquery',
 				cellRange,
 				cells;
 			
-			cellRange = this.determineRowsAndColumns(that.width, that.height);
+			cellRange = that.collection.determineRowsAndColumns(that.width, that.height);
 			that.createScales(cellRange);
 			that.createColorScale();
 			that.determineColors();
-			that.createSVG(this.width, this.height);
+			that.createSVG(that.width, that.height);
 			that.drawBackground(cellRange);
-			cells = this.createCellData(cellRange);
+			cells = that.collection.createCellData(cellRange);
 			that.renderGrid(cells);
 		};
 
@@ -59,6 +61,7 @@ define(['jquery',
 			}
 		};
 
+		
 		that.createColorScale = function() {
 			
 			var 
@@ -70,6 +73,7 @@ define(['jquery',
 								.domain([0,1])
 								.range(colorRange);
 		};
+		
 		
 		that.getCustomColor = function() {
 		
@@ -97,7 +101,7 @@ define(['jquery',
 			that.bgWidth = ((range.horizontal.length - 2) * (that.cellSize + 1));
 			that.bgHeight = ((range.vertical.length - 2) * (that.cellSize + 1));
 			
-			that.background = this.svg.append('rect')
+			that.background = that.svg.append('rect')
 			.attr('width',that.bgWidth)
 			.attr('height', that.bgHeight)
 			.style('fill', that.helpers.createRandomRGB())
@@ -133,7 +137,6 @@ define(['jquery',
 								
 								
 		that.createCellData = function(range) {
-			var that = this;
 			var cells = [];   
 			_.each(range.vertical, function(i) {  
 				_.each(range.horizontal, function(j){        
@@ -191,7 +194,7 @@ define(['jquery',
 				coordinates.x -= (that.cellSize*2 + 2);
 			}
 			if (coordinates.y > (that.bgHeight + that.cellSize +1)) {
-				coordinates.y -= (this.cellSize*2 + 2);
+				coordinates.y -= (that.cellSize*2 + 2);
 			}
 			
 			return coordinates;

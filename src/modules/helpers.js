@@ -1,13 +1,7 @@
 
 define(['jquery',
-	'backbone',
-	'underscore',
-	'd3'
-], function($,
-	Backbone,
-	_,
-	d3
-	) {
+	'underscore'
+], function($,_) {
 
 	
 	var Helper = function() {
@@ -15,10 +9,12 @@ define(['jquery',
 		var that = {};
 			
 		that.createRandomRGB = function() {
-			var red = Math.floor((Math.random() * 256)).toString();
-			var green = Math.floor((Math.random() * 256)).toString();
-			var blue = Math.floor((Math.random() * 256)).toString();
-			var rgb = 'rgb(' + red + ',' + green +',' + blue +')';
+			var 
+				red = Math.floor((Math.random() * 256)).toString(),
+				green = Math.floor((Math.random() * 256)).toString(),
+				blue = Math.floor((Math.random() * 256)).toString(),
+				rgb = 'rgb(' + red + ',' + green +',' + blue +')';
+				
 			return rgb;
 		};
 		
@@ -28,20 +24,16 @@ define(['jquery',
 			return sign;
 		};
 		
+		
 		that.getNewCoordinates = function(cell) {
 			
-			var 
-			coordinates,
-				cellSize,
-				currentX,
-				currentY,
-				change;
-			
-			coordinates = {};
-			cellSize = cell.width.baseVal.value;
-			currentX = cell.x.baseVal.value; 
-			currentY = cell.y.baseVal.value;
-			change = this.getPlusOrMinus() * (cellSize + 1 );
+			var
+				coordinates = {},
+				cellSize = cell.width.baseVal.value,
+				currentX = cell.x.baseVal.value,
+				currentY = cell.y.baseVal.value,
+				change = this.getPlusOrMinus() * (cellSize + 1 );
+				
 			coordinates.x = currentX + change;
 			coordinates.y = currentY + change;
 			

@@ -3,12 +3,14 @@ define(['jquery',
 	'backbone',
 	'underscore',
 	'd3',
-	'modules/cellBlockGenerator'
+	'modules/cellBlockGenerator',
+	'modules/cellCollection'
 ], function($,
 	Backbone,
 	_,
 	d3,
-	CellBlockGenerator
+	CellBlockGenerator,
+	CellCollection
 	) {
 
 	var pageloader = {
@@ -21,7 +23,7 @@ define(['jquery',
 				cellSize: 15,
 				colors: []
 			});
-				
+							
 			cellBlock.render();
 
 			window.setInterval(function(){cellBlock.changeColorOfACell();}, 1);
