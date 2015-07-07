@@ -1,23 +1,34 @@
 
-(function () {
+define(['jquery',
+	'backbone',
+	'underscore',
+	'd3'
+], function($,
+	Backbone,
+	_,
+	d3
+	) {
+
 	
-	helpers = {
+	var Helper = function() {
+	
+		var that = {};
 			
-		createRandomRGB: function() {
+		that.createRandomRGB = function() {
 			var red = Math.floor((Math.random() * 256)).toString();
 			var green = Math.floor((Math.random() * 256)).toString();
 			var blue = Math.floor((Math.random() * 256)).toString();
 			var rgb = 'rgb(' + red + ',' + green +',' + blue +')';
 			return rgb;
-		},
+		};
 		
 		
-		getPlusOrMinus: function() {
+		that.getPlusOrMinus = function() {
 			var sign = Math.random() < 0.5 ? -1 : 1;
 			return sign;
-		},
+		};
 		
-		getNewCoordinates: function(cell) {
+		that.getNewCoordinates = function(cell) {
 			
 			var 
 			coordinates,
@@ -35,8 +46,12 @@
 			coordinates.y = currentY + change;
 			
 			return coordinates;
-		}
-	};
+		};
 		
-}());
+		return that;
+	};
+	
+	return Helper;
+		
+});
 

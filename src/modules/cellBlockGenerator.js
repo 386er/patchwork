@@ -1,7 +1,16 @@
+define(['jquery',
+	'backbone',
+	'underscore',
+	'd3',
+	'modules/helpers'
+], function($,
+	Backbone,
+	_,
+	d3,
+	Helper
+	) {
 
-(function () {
-
-	cellBlockGenerator = function(parameterObj) {
+	var CellBlockGenerator = function(parameterObj) {
 		
 		var that = {};
 		
@@ -11,6 +20,7 @@
 		that.colors = parameterObj.colors;
 		that.className = "svg-wrapper";
 		that.COLOR_RANGE_MULTIPLICATOR = 2;
+		that.helpers = new Helper();
 		
 		
 		
@@ -42,7 +52,7 @@
 		that.determineColors = function() {
 		
 			if (that.colors.length === 0) {
-				that.getColor = helpers.createRandomRGB;
+				that.getColor = that.helpers.createRandomRGB;
 			}
 			else {
 				that.getColor = that.getCustomColor;
@@ -90,7 +100,7 @@
 			that.background = this.svg.append('rect')
 			.attr('width',that.bgWidth)
 			.attr('height', that.bgHeight)
-			.style('fill', helpers.createRandomRGB())
+			.style('fill', that.helpers.createRandomRGB())
 			.attr('opacity', 0.175)
 			.attr('transform', 'translate('+ that.cellSize + ',' + that.cellSize + ')');
 		};
@@ -196,7 +206,7 @@
 				selectedCell;
 			
 			cellToBeMoved = that.pickRandomCell();
-			coordinates = helpers.getNewCoordinates(cellToBeMoved);
+			coordinates = that.helpers.getNewCoordinates(cellToBeMoved);
 			coordinates = that.validateCoordinates(coordinates);
 			selectedCell = d3.select(cellToBeMoved);
 			
@@ -234,9 +244,11 @@
 		};
 		
 		that = new (Backbone.View.extend(that))();
+		that.constructor.apply(that, arguments);
 			
 		return that;
 	};
+	
+	return CellBlockGenerator;
 
-
-}());
+});
