@@ -20,7 +20,7 @@ define(['jquery',
 		
 		
 		that.getPlusOrMinus = function() {
-			var sign = Math.random() < 0.5 ? -1 : 1;
+			var sign = Math.random() < 0 ? -1 : 1;
 			return sign;
 		};
 		

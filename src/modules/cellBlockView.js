@@ -133,18 +133,15 @@ define(['jquery',
 		that.moveCell = function(direction) {
 				
 			var
-				cellToBeMoved,
 				coordinates,
-				selectedCell;
-			
-			cellToBeMoved = that.collection.getRandomCellModel();
+				cellToBeMoved = that.collection.getRandomCellModel(),
+				cellID = '#' + cellToBeMoved.get('id'),
+				selectedCell = d3.select(cellID);
+
 			coordinates = that.getNewCoordinates(cellToBeMoved);
 			coordinates = that.validateCoordinates(coordinates);
 			cellToBeMoved.set({'x':coordinates.x})
 			cellToBeMoved.set({'y':coordinates.y})
-			var cellID = '#' + cellToBeMoved.get('id');
-			selectedCell = d3.select(cellID);
-			
 			
 			if (direction === 'x') {
 				selectedCell.transition("x").duration(2000)
@@ -176,18 +173,19 @@ define(['jquery',
 				currentX = cell.get('x'),
 				currentY = cell.get('y');
 				
-			coordinates.x = currentX + this.getPlusOrMinus();
-			coordinates.y = currentY + this.getPlusOrMinus();
+			coordinates.x = currentX + that.helpers.getPlusOrMinus();
+			coordinates.y = currentY + that.helpers.getPlusOrMinus();
 			
 			return coordinates;
 		};	
 				
 		that.pickRandomCell = function() {
 			
-			var cells = d3.selectAll('.cell')[0]; 
-			var numOfCells = d3.selectAll('.cell')[0].length;
-			var randomNumber = Math.floor(Math.random() * numOfCells);
-			var randomCell = cells[randomNumber];
+			var 
+				cells = d3.selectAll('.cell')[0], 
+				numOfCells = d3.selectAll('.cell')[0].length,
+				randomNumber = Math.floor(Math.random() * numOfCells),
+				randomCell = cells[randomNumber];
 			
 			return randomCell;
 		};

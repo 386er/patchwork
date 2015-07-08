@@ -72,6 +72,9 @@ define(['jquery',
 		
 		
 		that.getRandomCellModel = function() {
+
+
+			// TODO check for class property to smooth animation
 			
 			var 
 				numOfModels = that.models.length, 
