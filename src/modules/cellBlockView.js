@@ -18,7 +18,6 @@ define(['jquery',
 		that.className = "svg-wrapper";
 		that.COLOR_RANGE_MULTIPLICATOR = 2;
 		that.helpers = new Helper();
-		//that.collection = new CellCollection(that.cellSize, that.colors);
 		
 		
 		that.render = function() {
@@ -77,19 +76,7 @@ define(['jquery',
 			
 			return that.colorScale(ranNum);
 		};
-				
-				
-/* 		that.determineRowsAndColumns = function(width, height) {
-			var range = {};
-			var numberOfCellsPerRow = Math.floor( width / (that.cellSize + 1) ) ;
-			var numberOfCellsPerColumn =  Math.floor( height / (that.cellSize + 1) );
-			range.horizontal = _.range(numberOfCellsPerRow);
-			range.vertical = _.range(numberOfCellsPerColumn);
-			
-			return range;
-		}; */
-					
-					
+										
 		that.drawBackground = function(range) {
 						
 			that.bgWidth = ((range.horizontal.length - 2) * (that.cellSize + 1));
