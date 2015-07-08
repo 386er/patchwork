@@ -80,32 +80,14 @@ define(['jquery',
 			
 		};
 								
-								
-		that.createCellData = function(range) {
-			var cells = [];   
-			_.each(range.vertical, function(i) {  
-				_.each(range.horizontal, function(j){        
-					var cellColor = that.getColor();
-					var cellObject = {};
-					cellObject.class = 'cell';
-					cellObject.width = that.cellSize;
-					cellObject.height = that.cellSize;
-					cellObject.x = j;
-					cellObject.y = i;
-					cellObject.color = cellColor;
-					cells.push(cellObject);
-				});
-			});
-			return cells;
-		};
-									
-									
+																	
 		that.renderGrid =  function(cells) {
 			that.svg.selectAll('placeholder')
 			.data(cells)
 			.enter()
 			.append('rect')
 			.attr('class', function(d) {return d.class;})
+			.attr('id', function(d) {return d.id})
 			.attr('width', function(d) {return d.width;})
 			.attr('height', function(d) {return d.height;})
 			.attr('x', function(d) {return that.xScale(d.x);})
@@ -153,20 +135,23 @@ define(['jquery',
 				coordinates,
 				selectedCell;
 			
-			cellToBeMoved = that.pickRandomCell();
+			cellToBeMoved = that.collection.getRandomCellModel();
 			coordinates = that.helpers.getNewCoordinates(cellToBeMoved);
 			coordinates = that.validateCoordinates(coordinates);
-			selectedCell = d3.select(cellToBeMoved);
+			cellToBeMoved.set({'x':coordinates.x})
+			cellToBeMoved.set({'y':coordinates.y})
+			var cellID = '#' + cellToBeMoved.get('id');
+			selectedCell = d3.select(cellID);
 			
 			
 			if (direction === 'x') {
 				selectedCell.transition("x").duration(2000)
-				.attr('x', coordinates.x)
+				.attr('x', that.xScale(coordinates.x))
 				.each("start", lock)
 				.each("end", unlock);
 			} else {
 				selectedCell.transition("y").duration(2000)
-				.attr('y', coordinates.y)
+				.attr('y', that.yScale(coordinates.y))
 				.each("start", lock)
 				.each("end", unlock);
 			}
@@ -202,7 +187,6 @@ define(['jquery',
 			that.width = that.collection.getWidth();
 			that.height = that.collection.getHeight();
 			that.cellSize = that.collection.getCellSize();
-			that.colors = that.collection.getColors();
 		};
 		
 		

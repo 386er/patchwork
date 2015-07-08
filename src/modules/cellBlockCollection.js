@@ -14,14 +14,15 @@ define(['jquery',
 	
 
 		var that = {};
-		
-		that.width = parameterObj.width;
-		that.height = parameterObj.height;
-		that.cellSize = parameterObj.cellSize;
-		that.colors = parameterObj.colors;
-		that.COLOR_RANGE_MULTIPLICATOR = 2;
 		that.helpers = new Helper();
+		that.COLOR_RANGE_MULTIPLICATOR = 2;
 		
+		that.assignProperties = function(parameterObj) {
+			that.width = parameterObj.width;
+			that.height = parameterObj.height;
+			that.cellSize = parameterObj.cellSize;
+			that.colors = parameterObj.colors;			
+		};
 		
 		that.determineRowsAndColumns = function() {
 			var range = {};
@@ -42,6 +43,8 @@ define(['jquery',
 					var cellColor = that.helpers.createRandomRGB();
 					var cellObject = {};
 					cellObject.class = 'cell';
+					cellObject.id = 'x' + j + 'y' + 'i' + Math.floor(Math.random() * 10000) ;
+					cellObject.cellSize = that.cellSize;
 					cellObject.width = that.cellSize;
 					cellObject.height = that.cellSize;
 					cellObject.x = j;
@@ -50,6 +53,9 @@ define(['jquery',
 					cells.push(cellObject);
 				});
 			});
+			console.log(cells.length);
+			that.add(cells);
+			
 			return cells;
 		};
 		
@@ -63,6 +69,17 @@ define(['jquery',
 				that.getColor = that.getCustomColor;
 			}
 		};
+		
+		
+		that.getRandomCellModel = function() {
+			
+			var 
+				numOfModels = that.models.length, 
+				ranIndex =  Math.floor(Math.random() * numOfModels);		
+			
+			return that.models[ranIndex]
+		};
+		
 		
 		
 		that.getCustomColor = function() {
@@ -84,12 +101,7 @@ define(['jquery',
 		that.getCellSize = function() {
 			return that.cellSize;
 		}
-		
-		that.getColors = function() {
-			return that.colors;
-		}
-		
-		
+				
 		that = new (Backbone.Collection.extend(that))();
 		that.constructor.apply(that, arguments);
 			

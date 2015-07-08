@@ -29,13 +29,12 @@ define(['jquery',
 			
 			var
 				coordinates = {},
-				cellSize = cell.width.baseVal.value,
-				currentX = cell.x.baseVal.value,
-				currentY = cell.y.baseVal.value,
-				change = this.getPlusOrMinus() * (cellSize + 1 );
+				cellSize = cell.get('cellSize'),
+				currentX = cell.get('x'),
+				currentY = cell.get('y');
 				
-			coordinates.x = currentX + change;
-			coordinates.y = currentY + change;
+			coordinates.x = currentX + this.getPlusOrMinus();
+			coordinates.y = currentY + this.getPlusOrMinus();
 			
 			return coordinates;
 		};

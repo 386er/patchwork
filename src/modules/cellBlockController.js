@@ -18,7 +18,8 @@ define(['jquery',
 		
 		that.initialize = function() {
 		
-			that.cellBlockCollection = new CellBlockCollection({
+			that.cellBlockCollection = new CellBlockCollection()
+			that.cellBlockCollection.assignProperties({
 				width: 970,
 				height: 500,
 				cellSize: 15,
@@ -33,6 +34,7 @@ define(['jquery',
 			
 				
 			that.cellBlockView.render();
+			console.log(that.cellBlockCollection.models);
 
 			window.setInterval(function(){that.cellBlockView.changeColorOfACell();}, 1);
 			window.setInterval(function(){that.cellBlockView.changeColorOfACell();}, 1);
