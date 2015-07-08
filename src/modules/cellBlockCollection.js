@@ -22,10 +22,11 @@ define(['jquery',
 		that.COLOR_RANGE_MULTIPLICATOR = 2;
 		that.helpers = new Helper();
 		
-		that.determineRowsAndColumns = function(width, height) {
+		
+		that.determineRowsAndColumns = function() {
 			var range = {};
-			var numberOfCellsPerRow = Math.floor( width / (that.cellSize + 1) ) ;
-			var numberOfCellsPerColumn =  Math.floor( height / (that.cellSize + 1) );
+			var numberOfCellsPerRow = Math.floor( that.width / (that.cellSize + 1) ) ;
+			var numberOfCellsPerColumn =  Math.floor( that.height / (that.cellSize + 1) );
 			range.horizontal = _.range(numberOfCellsPerRow);
 			range.vertical = _.range(numberOfCellsPerColumn);
 			
@@ -38,7 +39,7 @@ define(['jquery',
 			var cells = [];   
 			_.each(range.vertical, function(i) {  
 				_.each(range.horizontal, function(j){        
-					var cellColor = that.getColor();
+					var cellColor = that.helpers.createRandomRGB();
 					var cellObject = {};
 					cellObject.class = 'cell';
 					cellObject.width = that.cellSize;
@@ -67,7 +68,6 @@ define(['jquery',
 		that.getCustomColor = function() {
 		
 			var numOfColors = that.colors.length;
-			//var multiplicator = numOfColors * that.COLOR_RANGE_MULTIPLICATOR;
 			var ranNum = Math.random();
 			
 			return that.colorScale(ranNum);

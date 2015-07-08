@@ -16,7 +16,6 @@ define(['jquery',
 		
 		var that = {};
 		that.className = "svg-wrapper";
-		that.COLOR_RANGE_MULTIPLICATOR = 2;
 		that.helpers = new Helper();
 		
 		
@@ -25,10 +24,8 @@ define(['jquery',
 				cellRange,
 				cells;
 			
-			cellRange = that.collection.determineRowsAndColumns(that.width, that.height);
+			cellRange = that.collection.determineRowsAndColumns();
 			that.createScales(cellRange);
-			that.createColorScale();
-			that.determineColors();
 			that.createSVG(that.width, that.height);
 			that.drawBackground(cellRange);
 			cells = that.collection.createCellData(cellRange);
@@ -43,40 +40,7 @@ define(['jquery',
 				.attr('height', height)
 				.attr("transform", "translate(100,100)");
 		 };
-		
-		
-		that.determineColors = function() {
-		
-			if (that.colors.length === 0) {
-				that.getColor = that.helpers.createRandomRGB;
-			}
-			else {
-				that.getColor = that.getCustomColor;
-			}
-		};
-
-		
-		that.createColorScale = function() {
-			
-			var 
-				numOfColors = that.colors.length,
-				colorRange = that.colors;
-
-			that.colorScale = d3.scale.linear()
-								.domain([0,1])
-								.range(colorRange);
-		};
-		
-		
-		that.getCustomColor = function() {
-		
-			var numOfColors = that.colors.length;
-			var multiplicator = numOfColors * that.COLOR_RANGE_MULTIPLICATOR;
-			var ranNum = Math.random();
-			
-			return that.colorScale(ranNum);
-		};
-										
+												
 		that.drawBackground = function(range) {
 						
 			that.bgWidth = ((range.horizontal.length - 2) * (that.cellSize + 1));
@@ -92,7 +56,7 @@ define(['jquery',
 						
 						
 		that.changeBackgroundColor = function() {
-			that.background.transition().duration(1500).style('fill', that.getColor());
+			that.background.transition().duration(1500).style('fill', that.helpers.createRandomRGB());
 		};
 							
 							
@@ -155,7 +119,7 @@ define(['jquery',
 		that.changeColorOfACell = function(){
 			
 			var cellToBeChanged = that.pickRandomCell();
-			var cellColor = that.getColor();
+			var cellColor = that.helpers.createRandomRGB();
 			
 			d3.select(cellToBeChanged)
 				.transition().duration(800)
