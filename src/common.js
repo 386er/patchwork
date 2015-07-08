@@ -14,10 +14,8 @@ require.config({
 	}
 });
 
-require(['modules/app'], function(pageloader) {
+require(['modules/app'], function(app) {
 	
-	console.log(pageloader);
-
-	pageloader.init();
+	app.init();
 
 });

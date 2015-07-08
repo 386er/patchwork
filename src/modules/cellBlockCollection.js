@@ -10,14 +10,16 @@ define(['jquery',
 	Helper
 	) {
 		
-	var CellCollection = function(cellSize, colors) { 	
+	var CellCollection = function(parameterObj) { 	
 	
 
 		var that = {};
 		
-		that.cellSize = cellSize;
-		that.colors = colors;
-		
+		that.width = parameterObj.width;
+		that.height = parameterObj.height;
+		that.cellSize = parameterObj.cellSize;
+		that.colors = parameterObj.colors;
+		that.COLOR_RANGE_MULTIPLICATOR = 2;
 		that.helpers = new Helper();
 		
 		that.determineRowsAndColumns = function(width, height) {
@@ -65,11 +67,28 @@ define(['jquery',
 		that.getCustomColor = function() {
 		
 			var numOfColors = that.colors.length;
-			var multiplicator = numOfColors * that.COLOR_RANGE_MULTIPLICATOR;
+			//var multiplicator = numOfColors * that.COLOR_RANGE_MULTIPLICATOR;
 			var ranNum = Math.random();
 			
 			return that.colorScale(ranNum);
 		};
+		
+		that.getWidth = function() {
+			return that.width;
+		};
+		
+		that.getHeight = function() {
+			return that.height;
+		}
+		
+		that.getCellSize = function() {
+			return that.cellSize;
+		}
+		
+		that.getColors = function() {
+			return that.colors;
+		}
+		
 		
 		that = new (Backbone.Collection.extend(that))();
 		that.constructor.apply(that, arguments);

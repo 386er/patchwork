@@ -3,7 +3,7 @@ define(['jquery',
 	'underscore',
 	'd3',
 	'modules/helpers',
-	'modules/cellCollection'
+	'modules/cellBlockCollection'
 ], function($,
 	Backbone,
 	_,
@@ -12,18 +12,13 @@ define(['jquery',
 	CellCollection
 	) {
 
-	var CellBlockGenerator = function(parameterObj) {
+	var CellBlockView = function() {
 		
 		var that = {};
-		
-		that.width = parameterObj.width;
-		that.height = parameterObj.height;
-		that.cellSize = parameterObj.cellSize;
-		that.colors = parameterObj.colors;
 		that.className = "svg-wrapper";
 		that.COLOR_RANGE_MULTIPLICATOR = 2;
 		that.helpers = new Helper();
-		that.collection = new CellCollection(that.cellSize, that.colors);
+		//that.collection = new CellCollection(that.cellSize, that.colors);
 		
 		
 		that.render = function() {
@@ -66,7 +61,6 @@ define(['jquery',
 			
 			var 
 				numOfColors = that.colors.length,
-				colorDomain = _.range(0, numOfColors * that.COLOR_RANGE_MULTIPLICATOR),
 				colorRange = that.colors;
 
 			that.colorScale = d3.scale.linear()
@@ -85,7 +79,7 @@ define(['jquery',
 		};
 				
 				
-		that.determineRowsAndColumns = function(width, height) {
+/* 		that.determineRowsAndColumns = function(width, height) {
 			var range = {};
 			var numberOfCellsPerRow = Math.floor( width / (that.cellSize + 1) ) ;
 			var numberOfCellsPerColumn =  Math.floor( height / (that.cellSize + 1) );
@@ -93,7 +87,7 @@ define(['jquery',
 			range.vertical = _.range(numberOfCellsPerColumn);
 			
 			return range;
-		};
+		}; */
 					
 					
 		that.drawBackground = function(range) {
@@ -246,12 +240,30 @@ define(['jquery',
 			return randomCell;
 		};
 		
+		
+		that.getColorScale = function() {
+			return that.colorScale;	
+		};
+		
+		
+		that.assignCollection = function(collection) {
+			that.collection = collection;
+			that.width = that.collection.getWidth();
+			that.height = that.collection.getHeight();
+			that.cellSize = that.collection.getCellSize();
+			that.colors = that.collection.getColors();
+		};
+		
+		
+		
+		
+		
 		that = new (Backbone.View.extend(that))();
 		that.constructor.apply(that, arguments);
 			
 		return that;
 	};
 	
-	return CellBlockGenerator;
+	return CellBlockView;
 
 });
