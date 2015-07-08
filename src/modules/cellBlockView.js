@@ -62,10 +62,12 @@ define(['jquery',
 							
 		that.createScales = function(range) {
 			var xDomain = range.horizontal;
+			that.xDomain = xDomain;
 			var xRange = _.map(xDomain, function(position) {
 				return position * that.cellSize + position * 1;
 			});
 			var yDomain = range.vertical;
+			that.yDomain = yDomain;
 			var yRange = _.map(xDomain, function(position) {
 				return position * that.cellSize + position * 1;
 			});
@@ -117,11 +119,11 @@ define(['jquery',
 			if (coordinates.y < 0) {
 				coordinates.y *= -1;
 			}    
-			if (coordinates.x > (that.bgWidth + that.cellSize +1)) {
-				coordinates.x -= (that.cellSize*2 + 2);
+			if (coordinates.x > d3.max(that.xDomain)) {
+				coordinates.x -= 1;
 			}
-			if (coordinates.y > (that.bgHeight + that.cellSize +1)) {
-				coordinates.y -= (that.cellSize*2 + 2);
+			if (coordinates.y > d3.max(that.yDomain)) {
+				coordinates.y -= 1;
 			}
 			
 			return coordinates;
@@ -136,7 +138,7 @@ define(['jquery',
 				selectedCell;
 			
 			cellToBeMoved = that.collection.getRandomCellModel();
-			coordinates = that.helpers.getNewCoordinates(cellToBeMoved);
+			coordinates = that.getNewCoordinates(cellToBeMoved);
 			coordinates = that.validateCoordinates(coordinates);
 			cellToBeMoved.set({'x':coordinates.x})
 			cellToBeMoved.set({'y':coordinates.y})
@@ -164,7 +166,21 @@ define(['jquery',
 				d3.select(this).classed({cell: true, locked: false});
 			}  
 		};
+		
+
+		that.getNewCoordinates = function(cell) {
+			
+			var
+				coordinates = {},
+				cellSize = cell.get('cellSize'),
+				currentX = cell.get('x'),
+				currentY = cell.get('y');
 				
+			coordinates.x = currentX + this.getPlusOrMinus();
+			coordinates.y = currentY + this.getPlusOrMinus();
+			
+			return coordinates;
+		};	
 				
 		that.pickRandomCell = function() {
 			

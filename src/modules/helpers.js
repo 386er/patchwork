@@ -24,21 +24,7 @@ define(['jquery',
 			return sign;
 		};
 		
-		
-		that.getNewCoordinates = function(cell) {
-			
-			var
-				coordinates = {},
-				cellSize = cell.get('cellSize'),
-				currentX = cell.get('x'),
-				currentY = cell.get('y');
 				
-			coordinates.x = currentX + this.getPlusOrMinus();
-			coordinates.y = currentY + this.getPlusOrMinus();
-			
-			return coordinates;
-		};
-		
 		return that;
 	};
 	
