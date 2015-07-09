@@ -39,7 +39,7 @@ define(['jquery',
 				.attr('width',width)
 				.attr('height', height)
 				.attr("transform", "translate(100,100)");
-		 };
+		};
 												
 		that.drawBackground = function(range) {
 						
@@ -178,7 +178,8 @@ define(['jquery',
 			
 			return coordinates;
 		};	
-				
+			
+			
 		that.pickRandomCell = function() {
 			
 			var 
@@ -202,11 +203,7 @@ define(['jquery',
 			that.height = that.collection.getHeight();
 			that.cellSize = that.collection.getCellSize();
 		};
-		
-		
-		
-		
-		
+			
 		that = new (Backbone.View.extend(that))();
 		that.constructor.apply(that, arguments);
 			
