@@ -73,14 +73,18 @@ define(['jquery',
 		
 		that.getRandomCellModel = function() {
 
-
-			// TODO check for class property to smooth animation
-			
 			var 
 				numOfModels = that.models.length, 
-				ranIndex =  Math.floor(Math.random() * numOfModels);		
+				ranIndex =  Math.floor(Math.random() * numOfModels);
+				model = that.models[ranIndex],
+				modelID = model.get('id'),
+				rect = d3.select('#' + modelID);
 			
-			return that.models[ranIndex]
+			if (rect.attr('class') === 'cell') {
+				return model;
+			}
+			
+			return that.getRandomCellModel();
 		};
 		
 		
