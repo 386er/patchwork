@@ -53,10 +53,8 @@ define(['jquery',
 					cells.push(cellObject);
 				});
 			});
-			console.log(cells.length);
+
 			that.add(cells);
-			
-			return cells;
 		};
 		
 		
@@ -88,6 +86,12 @@ define(['jquery',
 		};
 		
 		
+		that.getCells = function() {
+			var cellModels = that.toJSON();
+			
+			return cellModels;
+		};
+			
 		
 		that.getCustomColor = function() {
 		

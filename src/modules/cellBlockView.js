@@ -28,7 +28,8 @@ define(['jquery',
 			that.createScales(cellRange);
 			that.createSVG(that.width, that.height);
 			that.drawBackground(cellRange);
-			cells = that.collection.createCellData(cellRange);
+			that.collection.createCellData(cellRange);
+			cells = that.collection.getCells();
 			that.renderGrid(cells);
 		};
 
@@ -84,18 +85,18 @@ define(['jquery',
 								
 																	
 		that.renderGrid =  function(cells) {
-			that.svg.selectAll('placeholder')
-			.data(cells)
-			.enter()
-			.append('rect')
-			.attr('class', function(d) {return d.class;})
-			.attr('id', function(d) {return d.id})
-			.attr('width', function(d) {return d.width;})
-			.attr('height', function(d) {return d.height;})
-			.attr('x', function(d) {return that.xScale(d.x);})
-			.attr('y', function(d) {return that.yScale(d.y);})
-			.attr('opacity',0.8)
-			.style('fill', function(d) {return d.color;});
+			that.selection = that.svg.selectAll('placeholder').data(cells,  function (d) { return d.id });
+			
+			that.selection.enter()
+				.append('rect')
+				.attr('class', function(d) {return d.class;})
+				.attr('id', function(d) {return d.id})
+				.attr('width', function(d) {return d.width;})
+				.attr('height', function(d) {return d.height;})
+				.attr('x', function(d) {return that.xScale(d.x);})
+				.attr('y', function(d) {return that.yScale(d.y);})
+				.attr('opacity',0.8)
+				.style('fill', function(d) {return d.color;});
 			
 		};
 										
