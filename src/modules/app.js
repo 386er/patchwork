@@ -2,16 +2,19 @@
 define(['jquery',
 	'backbone',
 	'underscore',
-	'modules/cellBlockController'
+	'modules/cellBlockController',
+	'colorpicker'
 ], function($,
 	Backbone,
 	_,
-	CellBlockController
+	CellBlockController,
+	colorPicker
 	) {
 
 	var app = {
 
 		init : function() {
+
 
 			var cellBlockController = new CellBlockController();
 			

@@ -6,10 +6,16 @@ require.config({
 		underscore: 'library/underscore',
 		backbone: 'library/backbone',
 		d3: 'library/d3',
+		colors: 'library/colors',
+		colorpicker:'library/jqColorpicker'
 	},
 	shim:{
 		d3:{
 			exports:'d3'
+		},
+		colorpicker: {
+			deps: ['jquery','colors'],
+			exports: 'colorpicker'
 		}
 	}
 });
