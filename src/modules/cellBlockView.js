@@ -69,7 +69,7 @@ define(['jquery',
 			});
 			var yDomain = range.vertical;
 			that.yDomain = yDomain;
-			var yRange = _.map(xDomain, function(position) {
+			var yRange = _.map(yDomain, function(position) {
 				return position * that.cellSize + position * 1;
 			});
 			
@@ -78,8 +78,8 @@ define(['jquery',
 			.range(xRange);
 			
 			that.yScale = d3.scale.ordinal()
-			.domain(xDomain)
-			.range(xRange);
+			.domain(yDomain)
+			.range(yRange);
 			
 		};
 								
